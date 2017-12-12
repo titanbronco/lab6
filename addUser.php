@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
       
         global $conn;
         
-        $sql = "SELECT * FROM Departments ORDER BY name";
+        $sql = "SELECT * FROM department ORDER BY deptName";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,10 +18,10 @@ $conn = getDatabaseConnection();
 
 if (isset($_GET['addUser'])) {  //the add form has been submitted
 
-    $sql = "INSERT INTO User
-             (firstName, lastName, email, role, phone, deptId) 
+    $sql = "INSERT INTO users
+             (firstName, lastName, email, phone, role, deptId) 
              VALUES
-             (:fName, :lName, :email, :role, :phone, :deptId)";
+             (:fName, :lName, :email, :phone, :role, :deptId)";
     $np = array();
     
     echo "$sql";
@@ -47,6 +47,7 @@ if (isset($_GET['addUser'])) {  //the add form has been submitted
 <html>
     <head>
         <title>Admin: Add new user</title>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
     </head>
     <body>
 
@@ -81,7 +82,7 @@ if (isset($_GET['addUser'])) {  //the add form has been submitted
                     $departments = departmentList();
                     
                     foreach($departments as $department) {
-                       echo "<option value='".$department['id']."'> " . $department['name']  . "</option>";  
+                       echo "<option value='".$department['departmentId']."'> " . $department['deptName']  . "</option>";  
                     }
                     
                     

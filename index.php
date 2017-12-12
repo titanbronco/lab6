@@ -10,11 +10,13 @@ function loginProcess() {
       
             $username = $_POST['username'];
             $password = sha1($_POST['password']);
+            echo $username;
+            //echo $password;
             
             $sql = "SELECT *
-                    FROM admin
-                    WHERE userName = :username 
-                    AND   password = :password ";
+                    FROM user
+                    WHERE username = :username 
+                    AND   pw = :password ";
             
             $namedParameters = array();
             $namedParameters[':username'] = $username;
@@ -30,8 +32,8 @@ function loginProcess() {
                 
             } else {
                 
-               $_SESSION['username'] = $record['userName'];
-               $_SESSION['adminName'] = $record['firstName'] . "  " . $record['lastName'];
+               $_SESSION['username'] = $record['username'];
+              // $_SESSION['adminName'] = $record['firstName'] . "  " . $record['lastName'];
                //echo $record['firstName'];
                header("Location: admin.php"); //redirecting to admin.php
                 
@@ -46,13 +48,14 @@ function loginProcess() {
 <html>
     <head>
         <title> Admin Login  </title>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
     </head>
     <body>
 
 
             <h1> Admin Login </h1>
             
-            <form method="post">
+            <form method="Post">
                 
                 Username: <input type="text" name="username"/> <br />
                 

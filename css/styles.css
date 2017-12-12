@@ -1,0 +1,32 @@
+body {
+     background-color: blue;
+     color: yellow;
+     font-size: 1em;
+     line-height: 1.5em;
+     font-size: 1.2em;
+     text-align: center;
+ }
+header {
+    text-align: center;
+}
+#wrapper {
+    margin: 0 auto;
+    width: 800px;
+    text-align: center !important; 
+    
+}
+
+a {
+    color: gold;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+}
+
+tr{
+    border:2px;
+}

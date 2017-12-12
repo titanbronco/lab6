@@ -13,7 +13,7 @@ function departmentList(){
       
         global $conn;
         
-        $sql = "SELECT * FROM Departments ORDER BY name";
+        $sql = "SELECT * FROM department ORDER BY deptName";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -24,13 +24,13 @@ function getUserInfo() {
     global $conn;
     
     $sql = "SELECT * 
-            FROM User
-            WHERE id = " . $_GET['userId']; 
+            FROM users
+            WHERE userId = " . $_GET['userId']; 
     
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $record = $stmt->fetch(PDO::FETCH_ASSOC);
-    print_r($record);
+    //print_r($record);
     
     return $record;
 
@@ -39,19 +39,23 @@ function getUserInfo() {
 if(isset($_GET['updateUser'])){// checks whether admin has submitted form
 
     echo"Form has been submitted!";
-    $sql = "UPDATE User
-            SET firstame = :fName,
+    $sql = "UPDATE users
+            SET firstName = :fName,
                 lastName = :lName,
                 email = :email,
                 phone = :phone
-            WHERE id = :id";
+            WHERE userId = :id";
     $np = array();
     
     $np[':fName'] = $_GET['firstName'];
     $np[':lName'] = $_GET['lastName'];
+    $np[':email'] = $_GET['email'];
+    $np[':phone'] = $_GET['phone'];
     $np[':id'] = $_GET['userId'];
     
-    $stmt = $conn->prepare(sql);
+    print_r($np);
+    
+    $stmt = $conn->prepare($sql);
     $stmt->execute($np);
     
     echo"Record has been updated!";
@@ -75,12 +79,13 @@ if(isset($_GET['updateUser'])){// checks whether admin has submitted form
 <html>
     <head>
         <title> Update User </title>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
     </head>
     <body>
 
         <h1> Tech Checkout System: Updating User's Info </h1>
         <form method="GET">
-            <input type="hidden" name="userId" value="<?=$userInfo['id']?>" />
+            <input type="hidden" name="userId" value="<?=$userInfo['userId']?>" />
             First Name:<input type="text" name="firstName" value="<?=$userInfo['firstName']?>" />
             <br />
             Last Name:<input type="text" name="lastName" value="<?=$userInfo['lastName']?>"/>
@@ -106,8 +111,8 @@ if(isset($_GET['updateUser'])){// checks whether admin has submitted form
                     
                     foreach($departments as $department) {
                        echo "<option value='".$department['id']."' ";
-                       echo ($userInfo['deptId']==$department['id'])?" selected":"";
-                       echo "> " . $department['name']  . "</option>";  
+                       echo ($userInfo['deptId']==$department['deptartmentId'])?" selected":"";
+                       echo "> " . $department['deptName']  . "</option>";  
                     }
                     
                     
